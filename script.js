@@ -1,4 +1,6 @@
 // -- GLOBAL -- //
+const MAX_CHARS = 150;
+
 const textareaEl = document.querySelector(".form__textarea");
 const counterEl = document.querySelector(".counter");
 const formEl = document.querySelector(".form");
@@ -7,14 +9,11 @@ const submitBtnEl = document.querySelector(".submit-btn");
 
 // -- COUNTER COMPONENTS -- //
 const inputHandler = () => {
-  // determine the maximum number of characters
-  const maxNumChars = 150;
-
   // determine the number of characters currently typed
   const numCharsTyped = textareaEl.value.length;
 
   // calculate the number of characters left (max - currently typed)
-  const charsLeft = maxNumChars - numCharsTyped;
+  const charsLeft = MAX_CHARS - numCharsTyped;
 
   // Show number of characters left
   counterEl.textContent = charsLeft;
@@ -22,7 +21,15 @@ const inputHandler = () => {
 
 textareaEl.addEventListener("input", inputHandler);
 
-// -- SUBMIT COMPONENT -- //
+// -- FORM COMPONENT -- //
+const showVisualIndicator = (textCheck) => {
+  // show indicator
+  formEl.classList.add(`form--${textCheck}`);
+
+  // remove indicator
+  setTimeout(() => formEl.classList.remove(`form--${textCheck}`), 2000);
+};
+
 const submitHandler = (event) => {
   // prevent the default browser action (submitting form data to 'action'-address and refreshing page)
   event.preventDefault();
@@ -32,17 +39,9 @@ const submitHandler = (event) => {
 
   // validate text (check if hashtag is present and text is long enough)
   if (text.includes("#") && text.length > 4) {
-    // show valid indicator
-    formEl.classList.add("form--valid");
-
-    // remove indicator
-    setTimeout(() => formEl.classList.remove("form--valid"), 2000);
+    showVisualIndicator("valid");
   } else {
-    // show invalid indicator
-    formEl.classList.add("form--invalid");
-
-    // remove indicator
-    setTimeout(() => formEl.classList.remove("form--invalid"), 2000);
+    showVisualIndicator("invalid");
 
     // focus textarea again
     textareaEl.focus();
@@ -86,7 +85,7 @@ const submitHandler = (event) => {
   submitBtnEl.blur();
 
   // reset counter
-  counterEl.textContent = 150;
+  counterEl.textContent = MAX_CHARS;
 };
 
 formEl.addEventListener("submit", submitHandler);
