@@ -15,7 +15,7 @@ const renderFeedbackItem = (feedbackItem) => {
     <li class="feedback">
       <button class="upvote">
           <i class="fa-solid fa-caret-up upvote__icon"></i>
-          <span class="upvote__count">${feedbackItem.upVoteCount}</span>
+          <span class="upvote__count">${feedbackItem.upvoteCount}</span>
       </button>
       <section class="feedback__badge">
           <p class="feedback__letter">${feedbackItem.badgeLetter}</p>
@@ -130,6 +130,31 @@ const submitHandler = (event) => {
 formEl.addEventListener("submit", submitHandler);
 
 // -- FEEDBACK LIST COMPONENT -- //
+const clickHandler = (event) => {
+  // get clicked HTML-element
+  const clickedEl = event.target;
+
+  // determine if user intended to upvote or expand
+  const upvoteIntention = clickedEl.className.includes("upvote");
+
+  // run the appropiate logic
+  if (upvoteIntention) {
+    // grab the closest upvote button
+    const upvoteBtnEl = clickedEl.closest(".upvote");
+
+    // disable upvote button
+    upvoteBtnEl.disabled = true;
+
+    // select the upvote count element within the upvote button
+    const upvoteCountEl = document.querySelector;
+  } else {
+    // expand the clicked feedback item
+    clickedEl.closest(".feedback").classList.toggle("feedback--expand");
+  }
+};
+
+feedbackListEl.addEventListener("click", clickHandler);
+
 fetch(`${BASE_API_URL}/feedbacks`)
   .then((response) => response.json())
   .then((data) => {
