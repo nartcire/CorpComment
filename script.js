@@ -146,7 +146,16 @@ const clickHandler = (event) => {
     upvoteBtnEl.disabled = true;
 
     // select the upvote count element within the upvote button
-    const upvoteCountEl = document.querySelector;
+    const upvoteCountEl = upvoteBtnEl.querySelector(".upvote__count");
+
+    // get currently displayed upvote count as a number type
+    let upvoteCount = +upvoteCountEl.textContent;
+
+    // incremenet by 1
+    upvoteCount = upvoteCount + 1;
+
+    // set upvote count
+    upvoteCountEl.textContent = upvoteCount;
   } else {
     // expand the clicked feedback item
     clickedEl.closest(".feedback").classList.toggle("feedback--expand");
